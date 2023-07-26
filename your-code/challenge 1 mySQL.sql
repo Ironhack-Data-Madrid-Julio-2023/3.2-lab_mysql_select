@@ -1,4 +1,4 @@
-/*CHALLENGE 1, LAB_mySQL_SELECT*/
+
 SELECT 
   authors.au_id AS `ID DEL AUTOR`,
   authors.au_lname AS `APELLIDO`, 
