@@ -36,3 +36,32 @@ SELECT
 authors.au_id AS 'AUTHOR ID',
 authors.au_lname AS 'LAST NAME',
 authors.au_fname AS 'FIRST NAME',
+sum(sales.qty) AS 'TOTAL'
+
+FROM authors
+
+JOIN titleauthor on authors.au_id=titleauthor.au_id
+JOIN titles on titles.title_id=titleauthor.title_id
+JOIN sales on titles.title_id = sales.title_id
+
+GROUP BY authors.au_id
+ORDER BY sum(sales.qty) DESC
+LIMIT 3
+
+-- Challenge 4
+
+SELECT
+
+authors.au_id AS 'AUTHOR ID',
+authors.au_lname AS 'LAST NAME',
+authors.au_fname AS 'FIRST NAME',
+COALESCE(sum(sales.qty),0) AS 'TOTAL'
+
+FROM authors
+
+LEFT JOIN titleauthor on authors.au_id=titleauthor.au_id
+LEFT JOIN titles on titles.title_id=titleauthor.title_id
+LEFT JOIN sales on titles.title_id = sales.title_id
+
+GROUP BY authors.au_id
+ORDER BY COALESCE(sum(sales.qty),0) DESC
