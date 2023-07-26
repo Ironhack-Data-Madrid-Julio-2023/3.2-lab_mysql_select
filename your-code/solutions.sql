@@ -58,7 +58,7 @@ limit 3;
 
 select 
 au_lname as last_name, au_fname as first_name,
-sum(s.qty) as total
+ifnull(sum(s.qty), 0) as total
 
 from authors as a
 left join titleauthor as ta
