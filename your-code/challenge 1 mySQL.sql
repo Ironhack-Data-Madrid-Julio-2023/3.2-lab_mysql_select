@@ -3,8 +3,10 @@ SELECT
   authors.au_id AS `ID DEL AUTOR`,
   authors.au_lname AS `APELLIDO`, 
   authors.au_fname AS `NOMBRE`, 
-  titles.title AS `TÍTULO`, 
-  publishers.pub_name AS `EDITORIAL`
+  publishers.pub_name AS `EDITORIAL`,
+  count(*) AS `NUM LIBROS`
+  
+  
 FROM 
   authors
 INNER JOIN
@@ -12,4 +14,5 @@ INNER JOIN
 INNER JOIN
   titles ON titleauthor.title_id = titles.title_id
 INNER JOIN
-  publishers ON titles.pub_id = publishers.pub_id;
+  publishers ON titles.pub_id = publishers.pub_id
+group by authors.au_id, authors.au_lname, authors.au_fname, publishers.pub_name;
