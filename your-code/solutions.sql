@@ -47,3 +47,51 @@ Finalmente la FK de tal tabla tittle author(ta) y la tabla author(a) es au_id
 
 '''
 
+
+''' Challenge 2 '''
+
+
+SELECT authors.au_id AS 'AUTHOR ID',
+       authors.au_lname AS 'LAST NAME',
+       authors.au_fname AS 'FIRST NAME',
+       publishers.pub_name AS 'PUBLISHER',
+       count(titles.title_id) 'TITLE COUNT'
+     
+       
+FROM titleauthor
+
+RIGHT JOIN  authors ON authors.au_id = titleauthor.au_id
+RIGHT JOIN titles ON titleauthor.title_id = titles.title_id
+RIGHT JOIN publishers ON titles.pub_id = publishers.pub_id
+
+GROUP BY authors.au_id, publishers.pub_name;
+
+''' Explicación
+
+Desde la tabla tittleauthor realizamos los joins con las otras columnas
+primeramente se relaciona con la tabla authors, dónde comparten la FK en au_id
+después la tabla tittleauthor se relaciona con la  tabla tittles dónde comparten
+como FK en  tittle.id.
+
+Finalmente la tabla titles se relaciona con la tabla publisher 
+dónde comparten como FK la columna pub_id
+
+Finalmente con SELECT se renombra las tablas-columnas,
+authors.au_id(tabla authors, columna au_id)pasa a llamarse Author ID
+ 
+ 
+
+  Segunda forma'''
+
+SELECT ta.au_id AS 'AUTHOR ID',a.au_lname AS 'LAST NAME',a.au_fname AS 'FIRST NAME', COUNT(ta.title_id) AS 'TITLE COUNT'
+
+FROM titles AS t, titleauthor AS ta, publishers AS p, authors AS a
+
+WHERE t.title_id = ta.title_id AND t.pub_id = p.pub_id AND ta.au_id = a.au_id
+
+GROUP BY ta.au_id, a.au_lname, a.au_fname
+ORDER BY ta.au_id ASC;
+
+''' En lugar de usar los joins, usamos el filtro where en dónde damos las condiciones
+que deseamos '''
+
