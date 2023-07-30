@@ -95,3 +95,60 @@ ORDER BY ta.au_id ASC;
 ''' En lugar de usar los joins, usamos el filtro where en dónde damos las condiciones
 que deseamos '''
 
+
+''' Challenge 3 '''
+
+
+authors.au_id AS 'AUTHOR ID',
+authors.au_lname AS 'LAST NAME',
+authors.au_fname AS 'FIRST NAME',
+sum(sales.qty) AS 'TOTAL'
+
+FROM authors
+
+JOIN titleauthor on authors.au_id=titleauthor.au_id
+JOIN titles on titles.title_id=titleauthor.title_id
+JOIN sales on titles.title_id = sales.title_id
+
+GROUP BY authors.au_id
+ORDER BY sum(sales.qty) DESC
+ 
+LIMIT 3
+
+''' Segunda forma '''
+SELECT ta.au_id AS 'AUTHOR ID',a.au_lname AS 'LAST NAME',a.au_fname AS 'FIRST NAME', COUNT(ta.title_id) AS 'TITLE COUNT'
+FROM titles AS t, titleauthor AS ta, publishers AS p, authors AS a
+WHERE t.title_id = ta.title_id AND t.pub_id = p.pub_id AND ta.au_id = a.au_id
+GROUP BY ta.au_id, a.au_lname, a.au_fname
+ORDER BY ta.au_id desc
+limit 3;
+
+
+
+''' Challenge 4 '''
+select  ta.au_id as au_id,
+        max(au_fname) as first_name,
+        max(au_lname) as last_name,
+        count(title),
+        max(pub_name),
+        sum(qty) as qty
+
+from titleauthor as ta
+
+left join titles as t
+on t.title_id = ta.title_id
+left join authors as a
+on a.au_id = ta.au_id
+left join publishers as p
+on p.pub_id = t.pub_id
+right join sales as s
+on s.title_id = ta.title_id
+
+group by ta.au_id;
+
+'''Segunda forma'''
+SELECT a.au_id AS 'AUTHOR ID', a.au_lname AS 'LAST NAME', a.au_fname AS 'FIRST NAME', COALESCE(COUNT(ta.title_id), 0) AS 'TOTAL'
+FROM authors AS a
+LEFT JOIN titleauthor AS ta ON a.au_id = ta.au_id
+GROUP BY a.au_id, a.au_lname, a.au_fname
+ORDER BY COALESCE(COUNT(ta.title_id), 0) DESC;
