@@ -88,5 +88,8 @@ ON
   autores.`ID DEL AUTOR` = sales_totals.`ID DEL AUTOR`
 ORDER BY 
   `TOTAL` DESC;
+  
+   /*CHALLENGE 1, Lab_Advanced MySQL*/
+   
  
 

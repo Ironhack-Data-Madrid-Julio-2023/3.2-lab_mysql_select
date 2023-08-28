@@ -49,3 +49,16 @@ ON
 ORDER BY 
   `TOTAL` DESC;
  
+    /*CHALLENGE 1, Lab_Advanced MySQL*/
+    
+SELECT CAST(qty AS FLOAT) AS qty
+FROM sales;
+SELECT CAST(royalty AS FLOAT) AS royalty
+FROM titles;
+SELECT CAST(royaltyper AS FLOAT) AS royaltyper
+FROM titleauthor;
+SELECT 
+  sales.`qty`,
+  titles.`royalty`,
+    
+    sales_royalty = titles.price * sales.qty * titles.royalty / 100 * titleauthor.royaltyper / 100
